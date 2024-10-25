@@ -1,0 +1,36 @@
+name: BusyBox for Windows core forking for GitHub Actions
+
+on:
+  push:
+    branches:
+      - no-available-just-rename-in-case-you-want
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  download-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Obtain source code from frippery.org
+        run: |
+          wget https://frippery.org/files/busybox/busybox-w32-FRP-5467-g9376eebd8.tgz -O busybox-w32-FRP-5467-g9376eebd8.tgz
+
+      - name: Install Zstandard for Extraction
+        run: sudo apt install -y xz-utils tar
+
+      - name: Extract Source Code into Root Directory
+        run: tar --strip-components=1 -xf busybox-w32-FRP-5467-g9376eebd8.tgz
+
+      - name: Commit Changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "BusyBox for Windows core forking for GitHub Actions, version FRP-5467-g9376eebd8"
+          git push
