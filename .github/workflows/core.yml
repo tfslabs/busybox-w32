@@ -32,6 +32,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           rm busybox-w32-FRP-5467-g9376eebd8.tgz
+          rm .gitignore
           git add .
           git commit -m "BusyBox for Windows core forking for GitHub Actions, version FRP-5467-g9376eebd8"
           git push
